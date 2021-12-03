@@ -52,7 +52,7 @@ function clearDom() {
 
     container.innerHTML = "";
 
-    setTimeout(guess, 100);
+    setTimeout(guess, 30000);
 
     function guess() {
         let guessArray = [];
