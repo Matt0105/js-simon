@@ -27,7 +27,7 @@ function fillMyNumbers(guessArray) {
             
         let myNum = parseInt(prompt(`Inserisci il ${i+1} numero da indovinare (da 1 a 100)`));
 
-        while(myNum < 1 || isNaN(myNum)) {
+        while(myNum < 1 || myNum > 100 || guessArray.includes(myNum) || isNaN(myNum)) {
 
             myNum = parseInt(prompt(`Inserisci il ${i+1} numero da indovinare (da 1 a 100)`));
         }
