@@ -25,11 +25,11 @@ function fillMyNumbers(guessArray) {
 
     for(let i = 0; i < numbers.length; i++) {
             
-        let myNum = parseInt(prompt(`Inserisci il ${i+1} numero da indovinare`));
+        let myNum = parseInt(prompt(`Inserisci il ${i+1} numero da indovinare (da 1 a 100)`));
 
         while(myNum < 1 || isNaN(myNum)) {
 
-            myNum = parseInt(prompt(`Inserisci il ${i+1} numero da indovinare`));
+            myNum = parseInt(prompt(`Inserisci il ${i+1} numero da indovinare (da 1 a 100)`));
         }
 
         guessArray.push(myNum);
@@ -52,17 +52,35 @@ function clearDom() {
 
     container.innerHTML = "";
 
-    setTimeout(guess, 500);
+    setTimeout(guess, 100);
 
     function guess() {
         let guessArray = [];
+        let guessed = [];
+        let count = 0;
 
         guessArray = fillMyNumbers(guessArray);
 
-        console.log(guessArray);
+        for(let i = 0; i < guessArray.length; i++) {
+
+            if(guessArray.includes(numbers[i])) {
+                guessed.push(numbers[i])
+                count++;
+
+            }
+            console.log(count);
+            
+
+        }
+
+        container.innerHTML = `Hai indovinato ${count} numeri<br>`;
+
+        for(let i = 0; i < guessed.length; i++) {
+            container.innerHTML += guessed[i] + " ";
+        }
+        // console.log(guessed);
+
 
     }
-
-    
 }
 
