@@ -1,6 +1,6 @@
-function randomGenerator(array) {
+function randomGenerator(array, elements) {
 
-    for(let i = 0; i < 5; i++) {
+    for(let i = 0; i < elements; i++) {
         let rndNumber= Math.floor(Math.random() * 100) + 1;
     
         while(array.includes(rndNumber)) {
@@ -11,19 +11,19 @@ function randomGenerator(array) {
         array.push(rndNumber);
     }
 
-    return numbers;
+    return array;
 }
 
 function printNumber(container, numbers) {
 
-    for(let i = 0; i < 5; i++) {
+    for(let i = 0; i < numbers.length; i++) {
         container.append(numbers[i] + " ");
     }
 }
 
-function fillMyNumbers(guessArray) {
+function fillMyNumbers(guessArray, numberToGuess) {
 
-    for(let i = 0; i < numbers.length; i++) {
+    for(let i = 0; i < numberToGuess; i++) {
             
         let myNum = parseInt(prompt(`Inserisci il ${i+1} numero da indovinare (da 1 a 100)`));
 
@@ -38,49 +38,77 @@ function fillMyNumbers(guessArray) {
     return guessArray;
 }
 
+function setDifficult(difficult) {
+
+    if(difficult == "easy") {
+        return 5;
+    }
+    else if(difficult == "medium") {
+        return 7;
+    }
+    else {
+        return 9;
+    }
+}
+
 const container = document.querySelector(".container");
+const difficult = document.getElementById("difficult");
+const playBtn = document.getElementById("play-btn");
 
-let numbers = [];
 
-numbers = randomGenerator(numbers)
 
-printNumber(container, numbers);
 
-setTimeout(clearDom, 3000);
+playBtn.addEventListener("click", function() {
 
-function clearDom() {
+    let numbers = [];
+    let numberToGuess;
 
     container.innerHTML = "";
 
-    setTimeout(guess, 30000);
+    numberToGuess = setDifficult(difficult.value);
 
-    function guess() {
-        let guessArray = [];
-        let guessed = [];
-        let count = 0;
+    numbers = randomGenerator(numbers, numberToGuess)
 
-        guessArray = fillMyNumbers(guessArray);
+    printNumber(container, numbers);
 
-        for(let i = 0; i < guessArray.length; i++) {
+    setTimeout(clearDom, 3000);
 
-            if(guessArray.includes(numbers[i])) {
-                guessed.push(numbers[i])
-                count++;
+    function clearDom() {
+
+        container.innerHTML = "";
+
+        setTimeout(guess, 30000);
+
+        function guess() {
+            let guessArray = [];
+            let guessed = [];
+            let count = 0;
+
+            guessArray = fillMyNumbers(guessArray, numberToGuess);
+
+            for(let i = 0; i < guessArray.length; i++) {
+
+                if(guessArray.includes(numbers[i])) {
+                    guessed.push(numbers[i])
+                    count++;
+
+                }
+                console.log(count);
+                
 
             }
-            console.log(count);
-            
+
+            container.innerHTML = `Hai indovinato ${count} numeri<br>`;
+
+            for(let i = 0; i < guessed.length; i++) {
+                container.innerHTML += guessed[i] + " ";
+            }
+            // console.log(guessed);
+
 
         }
-
-        container.innerHTML = `Hai indovinato ${count} numeri<br>`;
-
-        for(let i = 0; i < guessed.length; i++) {
-            container.innerHTML += guessed[i] + " ";
-        }
-        // console.log(guessed);
-
-
     }
-}
+});
+
+
 
